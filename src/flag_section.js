@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Card = ({ image, altText, countryName }) => {
   return (
     <div
-      className="country-card"
+      className="countryCard" 
       style={{
         display: "flex",
         flexDirection: "column",
@@ -25,21 +25,19 @@ const api =
   "https://countries-search-data-prod-812920491762.asia-south1.run.app/countries";
 
 export default function Flagsection() {
-  const [flag, setFlag] = useState([]);
+  const [flags, setFlags] = useState([]);
   const [search, setSearch] = useState("");
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch(api)
       .then((res) => res.json())
-      .then((jsonRes) => setFlag(jsonRes))
+      .then((jsonRes) => setFlags(jsonRes))
       .catch((err) => {
         console.error(err);
-        setError(true);
       });
   }, []);
 
-  const filteredFlags = flag.filter((item) =>
+  const filteredFlags = flags.filter((item) =>
     item.common.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -47,32 +45,21 @@ export default function Flagsection() {
     <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
       <div style={{ width: "100%" }}>
         <input
-          type="text"
+          type="text" 
           placeholder="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{
-            width: "600px",
-            height: "42px",
-            margin: "40px 0",
-          }}
         />
       </div>
 
-      {error && <p>Error fetching countries.</p>}
-
-      {filteredFlags.length > 0 ? (
-        filteredFlags.map((item) => (
-          <Card
-            key={item.common}
-            image={item.png}
-            altText={item.common}
-            countryName={item.common}
-          />
-        ))
-      ) : (
-        <p>No results found</p>
-      )}
+      {filteredFlags.map((item) => (
+        <Card
+          key={item.common}
+          image={item.png}
+          altText={item.common}
+          countryName={item.common}
+        />
+      ))}
     </div>
   );
 }
