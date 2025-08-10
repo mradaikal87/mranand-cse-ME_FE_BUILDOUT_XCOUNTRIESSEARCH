@@ -49,6 +49,11 @@ export default function Flagsection() {
           placeholder="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          style={{
+            width:"400px",
+            margin:"40px 0",
+            padding:"20px"
+          }}
         />
       </div>
 
